@@ -1,12 +1,13 @@
 // ==UserScript==
-// @name         LISTE DES RESSOURCES
-// @namespace    td-biobank-tools
-// @version      1.0
-// @description  Colore la ligne du tableau quand sa case à cocher est sélectionnée
-// @author       moi
-// @match        http://svm-crbbio/TD-Biobank/ListSamplesSearch.do
-// @grant        GM_addStyle
-// @run-at       document-idle
+// @name         LISTE DES RESSOURCES : Lignes sélectionnées jaunes
+// @namespace    https://github.com/FLORECHU/tmkscript
+// @version      1.0.0
+// @description  Colore les lignes sélectionnées en jaune
+// @author       Flo
+// @match        http://svm-crbbio/TD-Biobank/SampleTreatment.do*
+// @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/ListeRessources_SelectionLigne.user.js
+// @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/ListeRessources_SelectionLigne.user.js
+// @grant        none
 // ==/UserScript==
 
 (function () {
