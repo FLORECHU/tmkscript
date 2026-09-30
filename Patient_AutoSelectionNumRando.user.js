@@ -1,9 +1,12 @@
 // ==UserScript==
-// @name         PATIENT : Autosélection du numéro de randomisation
-// @namespace    http://tampermonkey.net/
-// @version      3.3
-// @description  Copie le numéro de randomisation et ouvre la page de réception du patient
-// @match        http://svm-crbbio/TD-Biobank/CreatePatient.do?*
+// @name         PATIENT : Selection numero de randomisation
+// @namespace    https://github.com/FLORECHU/tmkscript
+// @version      1.0.0
+// @description  Selection numero de rando
+// @author       Flo
+// @match        http://svm-crbbio/TD-Biobank/SampleTreatment.do*
+// @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Patient_AutoSelectionNumRando.user.js
+// @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Patient_AutoSelectionNumRando.user.js
 // @grant        none
 // ==/UserScript==
 
