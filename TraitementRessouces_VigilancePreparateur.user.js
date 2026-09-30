@@ -5,8 +5,8 @@
 // @description  Bloque la création si le champ assistant n'est pas rempli, et vide le champ au chargement
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/SampleTreatment.do*
-// @updateURL    https://github.com/FLORECHU/tmkscript/raw/refs/heads/main/aliquotage_preparateur.user.js
-// @downloadURL  https://github.com/FLORECHU/tmkscript/raw/refs/heads/main/aliquotage_preparateur.user.js
+// @updateURL    https://github.com/FLORECHU/tmkscript/raw/refs/heads/main/TraitementRessouces_VigilancePreparateur.user.js
+// @downloadURL  https://github.com/FLORECHU/tmkscript/raw/refs/heads/main/TraitementRessouces_VigilancePreparateur.user.js
 // @grant        none
 // ==/UserScript==
 
