@@ -4,7 +4,7 @@
 // @version      1.0.0
 // @description  Selection numero de rando
 // @author       Flo
-// @match        http://svm-crbbio/TD-Biobank/SampleTreatment.do*
+// @match        http://svm-crbbio/TD-Biobank/CreatePatient.do?*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Patient_AutoSelectionNumRando.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Patient_AutoSelectionNumRando.user.js
 // @grant        none
