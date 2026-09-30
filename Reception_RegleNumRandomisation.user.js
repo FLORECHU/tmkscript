@@ -24,8 +24,9 @@
             <div style="display:flex;align-items:flex-start;gap:6px;">
                 <span style="font-size:16px;line-height:1;">⚠️</span>
                 <div>
-                    <div>✅ <strong>Si déjà inclus</strong> : récupérer le numéro déjà existant</div>
-                    <div>🆕 <strong>Si nouveau patient</strong> : pas d'initiale, mettre les <u>3 premières lettres</u> du protocole</div>
+                    <div> <strong>Si déjà inclus</strong> : récupérer le numéro déjà existant</div>
+                    <div> <strong>Si nouveau patient</strong> : pas d'initiale, mettre les <u>3 premières lettres</u> du protocole</div>
+                    <div> <strong>Si code attribué par l'étude</strong> : prendre leur code sans poser de questio, intiale ou pas.</u> du protocole</div>
                 </div>
             </div>
         `;
