@@ -14,7 +14,8 @@
     'use strict';
 
     const TEXTE = `Si déjà inclus on récupère le numéro déjà existant
-Si nouveau patient, pas d'initiale et mettre les 3 premières lettres du protocole.`;
+Si nouveau patient, pas d'initiale et mettre les 3 premières lettres du protocole.
+Si code attribué par l'étude : on applique leur règle (si initiale on les mets)`;
 
     function ajouterLabel() {
         const input = document.querySelector('input[name="randomizationNumber"]');
