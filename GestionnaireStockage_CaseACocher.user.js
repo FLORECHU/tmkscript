@@ -1,14 +1,4 @@
 // ==UserScript==
-// @name         Storage Tree — Cases à cocher
-// @namespace    perso.storagetree
-// @version      6.0
-// @match        http://svm-crbbio/TD-Biobank/storagetool-application/*
-// @grant        none
-// @run-at       document-idle
-// @all-frames   true
-// ==/UserScript==
-
-// ==UserScript==
 // @name         GESTIONNAIRE STOCKAGE : Case à cocher
 // @namespace    https://github.com/FLORECHU/tmkscript
 // @version      1.0.0
