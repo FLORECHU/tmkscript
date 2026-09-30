@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         LISTE DES RESSOURCES : Lignes sélectionnées jaunes
+// @name         RECEPTION : Regle numero de randomisation
 // @namespace    https://github.com/FLORECHU/tmkscript
 // @version      1.0.0
 // @description  Regle pour la saisie du numéro de randomisation
