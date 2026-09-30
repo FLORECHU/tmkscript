@@ -5,6 +5,7 @@
 // @description  Regle code anonyme
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/CreatePatient.do?*
+// @match        http://svm-crbbio/TD-Biobank/CreatePatient.do*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Patient_RegleCodeAnonyme.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Patient_RegleCodeAnonyme.user.js
 // @grant        none
