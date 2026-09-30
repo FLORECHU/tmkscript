@@ -13,7 +13,7 @@
 (function () {
     'use strict';
 
-    const TEXTE = 'Code patient + 3 premières lettres protocole';   // ← adaptez le texte ici
+    const TEXTE = 'Si déjà inclus on récupère le numéro déjà existant\nSi nouveau patient, pas d'initiale et mettre les 3 premières lettres du protocole.';   // ← adaptez le texte ici
 
     function ajouterLabel() {
         const input = document.querySelector('input[name="randomizationNumber"]');
