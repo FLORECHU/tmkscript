@@ -1,9 +1,12 @@
 // ==UserScript==
-// @name         TRAITEMENT DES RESSOURCES : Vigilance PBMC
-// @namespace    http://tampermonkey.net/
-// @version      1.2
-// @description  Colore en rouge doux si Cellule azote CRB sans PBMC dans la méthode de préparation (basé sur les IDs)
+// @name         TRAITEMENT DES RESSOURCES : Gestion du "Préparateur"
+// @namespace    https://github.com/FLORECHU/tmkscript
+// @version      1.0.0
+// @description  Bloque la création si le champ assistant n'est pas rempli, et vide le champ au chargement
+// @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/SampleTreatment.do*
+// @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/TraitementRessouces_VigilancePbmc.user.js
+// @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/TraitementRessouces_VigilancePbmc.user.js
 // @grant        none
 // ==/UserScript==
 
