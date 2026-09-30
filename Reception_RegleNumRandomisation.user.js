@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RECEPTION : Regle numero de randomisation
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.0
+// @version      1.0.1
 // @description  Regle pour la saisie du numéro de randomisation
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/ResourceReceipt.do*
@@ -13,7 +13,8 @@
 (function () {
     'use strict';
 
-    const TEXTE = 'Si déjà inclus on récupère le numéro déjà existant\nSi nouveau patient, pas d'initiale et mettre les 3 premières lettres du protocole.';   // ← adaptez le texte ici
+    const TEXTE = `Si déjà inclus on récupère le numéro déjà existant
+Si nouveau patient, pas d'initiale et mettre les 3 premières lettres du protocole.`;
 
     function ajouterLabel() {
         const input = document.querySelector('input[name="randomizationNumber"]');
@@ -31,7 +32,7 @@
             'color:#000',
             'font-size:11px',
             'font-weight:bold',
-            'white-space:nowrap',
+            'white-space:pre-line',
             'border-radius:3px',
             'line-height:1.4'
         ].join(';');
