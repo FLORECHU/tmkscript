@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name         RECEPTION : Règle n° de randomisation
-// @namespace    http://tampermonkey.net/
-// @version      2026-09-01
-// @description  try to take over the world!
-// @author       You
-// @match        http://svm-crbbio/TD-Biobank/ResourceReceipt.do
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=mammouth.ai
+// @name         LISTE DES RESSOURCES : Lignes sélectionnées jaunes
+// @namespace    https://github.com/FLORECHU/tmkscript
+// @version      1.0.0
+// @description  Regle pour la saisie du numéro de randomisation
+// @author       Flo
+// @match        http://svm-crbbio/TD-Biobank/ResourceReceipt.do*
+// @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Reception_RegleNumRandomisation.user.js
+// @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Reception_RegleNumRandomisation.user.js
 // @grant        none
 // ==/UserScript==
 
