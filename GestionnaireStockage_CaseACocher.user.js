@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         GESTIONNAIRE STOCKAGE : Case à cocher
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.1
+// @version      1.0.2
 // @description  Case à cocher pour marquer les boites
 // @author       Flo
-// @match        http://svm-crbbio/TD-Biobank/StorageBrowser.do
+// @match        http://svm-crbbio/TD-Biobank/StorageBrowser.do*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/GestionnaireStockage_CaseACocher.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/GestionnaireStockage_CaseACocher.user.js
 // @grant        none
