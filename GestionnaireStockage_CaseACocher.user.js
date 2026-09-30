@@ -4,7 +4,7 @@
 // @version      1.0.0
 // @description  Case à cocher pour marquer les boites
 // @author       Flo
-// @match        http://svm-crbbio/TD-Biobank/ListSamplesSearch.do*
+// @match        http://svm-crbbio/TD-Biobank/StorageBrowser.do
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/GestionnaireStockage_CaseACocher.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/GestionnaireStockage_CaseACocher.user.js
 // @grant        none
