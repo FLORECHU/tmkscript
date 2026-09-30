@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PATIENT : Regle code anonyme
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.0
+// @version      1.0.1
 // @description  Regle code anonyme
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/CreatePatient.do?*
