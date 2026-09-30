@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         ALIQUOTAGE : Gestion du "Préparateur"
+// @name         TRAITEMENT DES RESSOURCES : Gestion du "Préparateur"
 // @namespace    https://github.com/FLORECHU/tmkscript
 // @version      1.0.0
 // @description  Bloque la création si le champ assistant n'est pas rempli, et vide le champ au chargement
