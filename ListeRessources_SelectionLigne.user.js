@@ -7,7 +7,7 @@
 // @match        http://svm-crbbio/TD-Biobank/ListSamplesSearch.do*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/ListeRessources_SelectionLigne.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/ListeRessources_SelectionLigne.user.js
-// @grant        none
+// @grant        GM_addStyle
 // ==/UserScript==
 
 (function () {
