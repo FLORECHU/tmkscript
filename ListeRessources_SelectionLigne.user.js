@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LISTE DES RESSOURCES : Lignes sélectionnées jaunes
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.3
+// @version      1.0.4
 // @description  Colore les lignes sélectionnées en jaune
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/ListSamplesSearch.do?*
@@ -16,16 +16,19 @@
     /* ------------------------------------------------------------------
      *  RÉGLAGES — modifie uniquement ces valeurs si besoin
      * ------------------------------------------------------------------ */
-    const COULEUR_FOND   = '#ffe9a8';   // jaune doux
-    const COULEUR_BORDURE= '#e0a800';   // liseré à gauche
-    const GRAS           = false;       // true pour mettre le texte en gras
-    const NOM_CHECKBOX   = 'ids';       // attribut name des cases à cocher
+    const COULEUR_FOND       = '#ffe9a8';   // jaune doux (ligne cochée)
+    const COULEUR_BORDURE    = '#e0a800';   // liseré à gauche (ligne cochée)
+    const COULEUR_HOVER      = '#fff3cd';   // jaune clair (survol, non cochée)
+    const COULEUR_HOVER_COCHE= '#ffdf7e';   // jaune plus soutenu (survol + cochée)
+    const GRAS               = false;       // true pour mettre le texte en gras
+    const NOM_CHECKBOX       = 'ids';       // attribut name des cases à cocher
     /* ------------------------------------------------------------------ */
 
     const CLASSE = 'tm-ligne-cochee';
 
     /* 1 --- Styles ---------------------------------------------------- */
     GM_addStyle(`
+        /* Ligne cochée */
         tr.${CLASSE} > td {
             background-color: ${COULEUR_FOND} !important;
             ${GRAS ? 'font-weight: 600;' : ''}
@@ -33,12 +36,15 @@
         tr.${CLASSE} > td:first-child {
             box-shadow: inset 4px 0 0 ${COULEUR_BORDURE};
         }
-        /* Confort : surlignage au survol */
+
+        /* Survol d'une ligne NON cochée */
         table tr:hover > td {
-            background-color: #f0f6ff;
+            background-color: ${COULEUR_HOVER} !important;
         }
+
+        /* Survol d'une ligne COCHÉE : couleur distincte pour garder le repère visuel */
         table tr.${CLASSE}:hover > td {
-            background-color: ${COULEUR_FOND} !important;
+            background-color: ${COULEUR_HOVER_COCHE} !important;
         }
     `);
 
@@ -61,7 +67,6 @@
     }
 
     /* 3 --- Événements ------------------------------------------------- */
-    // Cochage direct d'une ligne
     document.addEventListener('change', function (e) {
         const t = e.target;
         if (t && t.type === 'checkbox' && t.name === NOM_CHECKBOX) {
@@ -69,11 +74,10 @@
         }
     }, true);
 
-    // Case "tout cocher" ou tout autre bouton qui modifie les cases
     document.addEventListener('click', function (e) {
         const t = e.target;
         if (t && (t.type === 'checkbox' || t.tagName === 'A' || t.tagName === 'BUTTON')) {
-            setTimeout(majTout, 0);   // laisse le script natif finir son travail
+            setTimeout(majTout, 0);
         }
     }, true);
 
