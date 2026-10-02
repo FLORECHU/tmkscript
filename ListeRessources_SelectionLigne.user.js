@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LISTE DES RESSOURCES : Lignes sélectionnées jaunes
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.6
+// @version      1.1.0
 // @description  Colore les lignes sélectionnées en jaune
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/ListSamplesSearch.do*
