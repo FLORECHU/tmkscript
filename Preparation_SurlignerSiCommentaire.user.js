@@ -1,21 +1,30 @@
 // ==UserScript==
 // @name         PREPARATION : Surligner échantillons avec commentaire
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.0
+// @version      1.0.1
 // @description  Colore en jaune pâle les tables ItemList dont une ressource porte un commentaire
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/CreatePatient.do?*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Preparation_SurlignerSiCommentaire.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Preparation_SurlignerSiCommentaire.user.js
+// @grant        GM_addStyle
 // @run-at       document-idle
-// @grant        none
 // ==/UserScript==
 
 (function () {
     'use strict';
 
     const COLOR = '#fffbcc';
-    const MARK  = 'data-note-hl';
+    const CLASSE = 'tm-note-hl';
+
+    GM_addStyle(`
+        table.ItemList.${CLASSE},
+        table.ItemList.${CLASSE} tr,
+        table.ItemList.${CLASSE} td,
+        table.ItemList.${CLASSE} th {
+            background-color: ${COLOR} !important;
+        }
+    `);
 
     function isVisible(img) {
         if (!img) return false;
@@ -23,20 +32,9 @@
                (img.offsetParent !== null || img.getClientRects().length > 0);
     }
 
-    function paint(table) {
-        table.setAttribute(MARK, '1');
-        table.style.setProperty('background-color', COLOR, 'important');
-        // ← le point clé : on force aussi tr / td / th
-        table.querySelectorAll('tr, td, th').forEach(el => {
-            el.setAttribute(MARK, '1');
-            el.style.setProperty('background-color', COLOR, 'important');
-        });
-    }
-
     function clearAll() {
-        document.querySelectorAll('[' + MARK + ']').forEach(el => {
-            el.style.removeProperty('background-color');
-            el.removeAttribute(MARK);
+        document.querySelectorAll('table.' + CLASSE).forEach(t => {
+            t.classList.remove(CLASSE);
         });
     }
 
@@ -47,24 +45,22 @@
             if (!isVisible(img)) return;
 
             let table = img.closest('table.ItemList');
-            while (table) {                       // remonter au bloc de plus haut niveau
+            while (table) {
                 const parent = table.parentElement &&
                                table.parentElement.closest('table.ItemList');
                 if (!parent) break;
                 table = parent;
             }
-            if (table) paint(table);
+            if (table) table.classList.add(CLASSE);
         });
     }
 
     let timer = null;
-    new MutationObserver(() => {
+    const observer = new MutationObserver(() => {
         clearTimeout(timer);
         timer = setTimeout(refresh, 120);
-    }).observe(document.body, {
-        childList: true, subtree: true,
-        attributes: true, attributeFilter: ['style', 'src', 'value', 'class']
     });
+    observer.observe(document.body, { childList: true, subtree: true });
 
     refresh();
 })();
