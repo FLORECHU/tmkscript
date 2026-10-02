@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LISTE DES RESSOURCES : Lignes sélectionnées jaunes
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.1.0
+// @version      1.1.1
 // @description  Colore les lignes sélectionnées en jaune
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/ListSamplesSearch.do*
@@ -22,28 +22,29 @@
     const COULEUR_HOVER_COCHE= '#ffdf7e';   // jaune plus soutenu (survol + cochée)
     const GRAS               = false;       // true pour mettre le texte en gras
     const NOM_CHECKBOX       = 'ids';       // attribut name des cases à cocher
+    const ID_TABLE           = 'samples-list'; // id de la table ciblée
     /* ------------------------------------------------------------------ */
 
     const CLASSE = 'tm-ligne-cochee';
 
     /* 1 --- Styles ---------------------------------------------------- */
     GM_addStyle(`
-        /* Ligne cochée */
-        tr.${CLASSE} > td {
+        /* Ligne cochée (uniquement dans #${ID_TABLE}) */
+        table#${ID_TABLE} tr.${CLASSE} > td {
             background-color: ${COULEUR_FOND} !important;
             ${GRAS ? 'font-weight: 600;' : ''}
         }
-        tr.${CLASSE} > td:first-child {
+        table#${ID_TABLE} tr.${CLASSE} > td:first-child {
             box-shadow: inset 4px 0 0 ${COULEUR_BORDURE};
         }
 
-        /* Survol d'une ligne NON cochée */
-        table tr:hover > td {
+        /* Survol d'une ligne NON cochée (uniquement dans #${ID_TABLE}) */
+        table#${ID_TABLE} tr:hover > td {
             background-color: ${COULEUR_HOVER} !important;
         }
 
-        /* Survol d'une ligne COCHÉE : couleur distincte pour garder le repère visuel */
-        table tr.${CLASSE}:hover > td {
+        /* Survol d'une ligne COCHÉE : couleur distincte (uniquement dans #${ID_TABLE}) */
+        table#${ID_TABLE} tr.${CLASSE}:hover > td {
             background-color: ${COULEUR_HOVER_COCHE} !important;
         }
     `);
@@ -62,7 +63,7 @@
 
     function majTout() {
         document
-            .querySelectorAll(`input[type="checkbox"][name="${NOM_CHECKBOX}"]`)
+            .querySelectorAll(`#${ID_TABLE} input[type="checkbox"][name="${NOM_CHECKBOX}"]`)
             .forEach(majLigne);
     }
 
