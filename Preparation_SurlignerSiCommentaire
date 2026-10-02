@@ -1,0 +1,68 @@
+// ==UserScript==
+// @name         PREPARATION : Surligner échantillons avec commentaire
+// @namespace    crbbio.local
+// @version      1.2
+// @description  Colore en jaune pâle les tables ItemList dont une ressource porte un commentaire
+// @match        http://svm-crbbio/TD-Biobank/ManageExecutePreparation.do*
+// @match        http://svm-crbbio:*/TD-Biobank/ManageExecutePreparation.do*
+// @run-at       document-idle
+// @grant        none
+// ==/UserScript==
+
+(function () {
+    'use strict';
+
+    const COLOR = '#fffbcc';
+    const MARK  = 'data-note-hl';
+
+    function isVisible(img) {
+        if (!img) return false;
+        return window.getComputedStyle(img).display !== 'none' &&
+               (img.offsetParent !== null || img.getClientRects().length > 0);
+    }
+
+    function paint(table) {
+        table.setAttribute(MARK, '1');
+        table.style.setProperty('background-color', COLOR, 'important');
+        // ← le point clé : on force aussi tr / td / th
+        table.querySelectorAll('tr, td, th').forEach(el => {
+            el.setAttribute(MARK, '1');
+            el.style.setProperty('background-color', COLOR, 'important');
+        });
+    }
+
+    function clearAll() {
+        document.querySelectorAll('[' + MARK + ']').forEach(el => {
+            el.style.removeProperty('background-color');
+            el.removeAttribute(MARK);
+        });
+    }
+
+    function refresh() {
+        clearAll();
+
+        document.querySelectorAll('img[src*="fff_note.gif"]').forEach(img => {
+            if (!isVisible(img)) return;
+
+            let table = img.closest('table.ItemList');
+            while (table) {                       // remonter au bloc de plus haut niveau
+                const parent = table.parentElement &&
+                               table.parentElement.closest('table.ItemList');
+                if (!parent) break;
+                table = parent;
+            }
+            if (table) paint(table);
+        });
+    }
+
+    let timer = null;
+    new MutationObserver(() => {
+        clearTimeout(timer);
+        timer = setTimeout(refresh, 120);
+    }).observe(document.body, {
+        childList: true, subtree: true,
+        attributes: true, attributeFilter: ['style', 'src', 'value', 'class']
+    });
+
+    refresh();
+})();
