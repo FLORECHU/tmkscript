@@ -1,11 +1,13 @@
 // ==UserScript==
-// @name         Surligner les lignes CESSION - TD Biobank
-// @namespace    http://svm-crbbio/
+// @name         RAPPORT BIRT : Mise en forme cession
+// @namespace    https://github.com/FLORECHU/tmkscript
 // @version      1.0.0
 // @description  Met en évidence les lignes dont le titre contient "CESSION _"
+// @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/ListReportTemplates.do*
-// @grant        GM_addStyle
-// @run-at       document-idle
+// @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Rapport_Cession.user.js
+// @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Rapport_Cession.user.js
+// @grant        none
 // ==/UserScript==
 
 (function () {
