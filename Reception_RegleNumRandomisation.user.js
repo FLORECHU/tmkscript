@@ -51,7 +51,7 @@
             'display:inline-block',
             'margin-left:10px',
             'padding:2px 6px',
-            'font-size:16px',
+            'font-size:14px',
             'font-weight:bold',
             'font_name:Segoe UI Semibold',
             'color:#ffffff',
