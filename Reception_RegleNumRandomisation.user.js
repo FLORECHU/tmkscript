@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RECEPTION : Regle numero de randomisation
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.6
+// @version      1.0.7
 // @description  Regle pour la saisie du numéro de randomisation
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/ResourceReceipt.do*
@@ -39,8 +39,37 @@
         input.parentNode.insertBefore(document.createElement('br'), input);
     }
 
-    ajouterLabel();
+    function ajouterMessageSamplingMethod() {
+        const champ = document.querySelector('[name="samplingMethodId"]');
+        if (!champ) return;
+        if (document.getElementById('msgSamplingMethod')) return;
 
-    new MutationObserver(ajouterLabel)
+        const msg = document.createElement('span');
+        msg.id = 'msgSamplingMethod';
+        msg.textContent = 'A sélectionner pour ESSAI et TAKAPO';
+        msg.style.cssText = [
+            'display:inline-block',
+            'margin-left:12px',
+            'padding:3px 8px',
+            'font-size:16px',
+            'font-weight:bold',
+            'color:#D50000',
+            'background:#FFEBEE',
+            'border:2px solid #D50000',
+            'border-radius:4px',
+            'vertical-align:middle'
+        ].join(';');
+
+        champ.insertAdjacentElement('afterend', msg);
+    }
+
+    function appliquer() {
+        ajouterLabel();
+        ajouterMessageSamplingMethod();
+    }
+
+    appliquer();
+
+    new MutationObserver(appliquer)
         .observe(document.documentElement, { childList: true, subtree: true });
 })();
