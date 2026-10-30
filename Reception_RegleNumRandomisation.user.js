@@ -46,15 +46,16 @@
 
         const msg = document.createElement('span');
         msg.id = 'msgSamplingMethod';
-        msg.textContent = '👉 A sélectionner pour ESSAI et TAKAPO 😊';
+        msg.textContent = '👉 À sélectionner pour ESSAI et TEKAPO 😊';
         msg.style.cssText = [
             'display:inline-block',
             'margin-left:10px',
             'padding:2px 6px',
             'font-size:16px',
             'font-weight:bold',
-            'color:#D50000',
-            'background:#FFEBEE',
+            'font_name:Segoe UI Semibold',
+            'color:#ffffff',
+            'background:#D50000',
             'border:1px solid #D50000',
             'border-radius:4px',
             'vertical-align:middle'
