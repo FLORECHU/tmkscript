@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RECEPTION : Regle numero de randomisation
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.1.0
+// @version      1.0.8
 // @description  Regle pour la saisie du numéro de randomisation
 // @author       Flo
 // @match        http://svm-crbbio/TD-Biobank/ResourceReceipt.do*
