@@ -46,7 +46,7 @@
 
         const msg = document.createElement('span');
         msg.id = 'msgSamplingMethod';
-        msg.textContent = 'A sélectionner pour ESSAI et TAKAPO';
+        msg.textContent = 'À sélectionner pour ESSAI et TAKAPO';
         msg.style.cssText = [
             'display:inline-block',
             'margin-left:12px',
