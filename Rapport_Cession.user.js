@@ -10,36 +10,45 @@
 // @grant        none
 // ==/UserScript==
 
+
 (function () {
   'use strict';
 
-  GM_addStyle(`
-    #template tr.cession-highlight td {
-      background-color: #fff3a0 !important;
-      font-weight: bold;
+  const style = document.createElement('style');
+  style.textContent = `
+    /* Ligne "odd" : violet très clair */
+    table#template tr.cession-highlight.odd,
+    table#template tr.cession-highlight.odd > td {
+      background: #f5effa !important;
+      background-color: #f5effa !important;
+      background-image: none !important;
     }
-    #template tr.cession-highlight td:first-child {
-      border-left: 6px solid #e67e00;
+
+    /* Ligne "even" : violet pastel un peu plus soutenu */
+    table#template tr.cession-highlight.even,
+    table#template tr.cession-highlight.even > td {
+      background: #eadcf5 !important;
+      background-color: #eadcf5 !important;
+      background-image: none !important;
     }
-    #template tr.cession-highlight:hover td {
-      background-color: #ffe766 !important;
+
+    /* Liseré discret à gauche */
+    table#template tr.cession-highlight > td:first-child {
+      border-left: 5px solid #b794d6 !important;
     }
-  `);
+  `;
+  document.body.appendChild(style);
 
   function surligner() {
-    document.querySelectorAll('#template tbody tr').forEach(function (tr) {
-      const td = tr.querySelector('td:first-child');
-      if (td && /CESSION\s*_/i.test(td.textContent)) {
+    document.querySelectorAll('table#template tr').forEach(function (tr) {
+      const td = tr.querySelector('td');
+      if (td && /CESSION/i.test(td.textContent)) {
         tr.classList.add('cession-highlight');
       }
     });
   }
 
   surligner();
-
-  // Si le tableau est rechargé dynamiquement (tri, pagination, AJAX)
-  const table = document.getElementById('template');
-  if (table) {
-    new MutationObserver(surligner).observe(table, { childList: true, subtree: true });
-  }
+  setTimeout(surligner, 1000);
+  setTimeout(surligner, 3000);
 })();
