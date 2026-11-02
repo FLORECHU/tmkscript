@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         PATIENT : Selection numero de randomisation
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.0
+// @version      1.0.1
 // @description  Selection numero de rando
 // @author       Flo
-// @match        http://svm-crbbio/TD-Biobank/CreatePatient.do?*
+// @include      *CreatePatient.do?*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Patient_AutoSelectionNumRando.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Patient_AutoSelectionNumRando.user.js
 // @grant        none
