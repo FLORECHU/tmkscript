@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         TRAITEMENT DES RESSOURCES : Gestion du "Préparateur"
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.2.0
+// @version      1.2.1
 // @description  Bloque la création si le champ assistant n'est pas rempli. Vide le champ à l'arrivée sur une nouvelle ressource, puis conserve la saisie tant qu'on reste sur la même ressource.
 // @author       Flo
-// @match        http://svm-crbbio/TD-Biobank/SampleTreatment.do*
+// @include      *SampleTreatment.do*
 // @updateURL    https://github.com/FLORECHU/tmkscript/raw/refs/heads/main/TraitementRessouces_VigilancePreparateur.user.js
 // @downloadURL  https://github.com/FLORECHU/tmkscript/raw/refs/heads/main/TraitementRessouces_VigilancePreparateur.user.js
 // @grant        none
