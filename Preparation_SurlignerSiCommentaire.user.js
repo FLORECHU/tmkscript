@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         PREPARATION : Surligner échantillons avec commentaire
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.1
+// @version      1.0.3
 // @description  Colore en jaune pâle les tables ItemList dont une ressource porte un commentaire
 // @author       Flo
-// @match        http://svm-crbbio/TD-Biobank/CreatePatient.do?*
+// @include      *CreatePatient.do?*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Preparation_SurlignerSiCommentaire.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Preparation_SurlignerSiCommentaire.user.js
 // @grant        GM_addStyle
