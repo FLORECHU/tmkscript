@@ -4,7 +4,7 @@
 // @version      1.0.10
 // @description  Regle pour la saisie du numéro de randomisation
 // @author       Flo
-// @match        http://svm-crbbio/TD-Biobank/ResourceReceipt.do*
+// @include      *ResourceReceipt.do*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Reception_RegleNumRandomisation.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Reception_RegleNumRandomisation.user.js
 // @grant        none
