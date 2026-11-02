@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         RAPPORT BIRT : Mise en forme cession
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.3
+// @version      1.0.4
 // @description  Met en évidence les lignes dont le titre contient "CESSION _"
 // @author       Flo
 // @include      *ListReportTemplates.do*
-// @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Rapport_Cession.user.js
-// @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Rapport_Cession.user.js
+// @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Rapport_MiseEnPage.user.js
+// @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Rapport_MiseEnPage.user.js
 // @grant        none
 // ==/UserScript==
 
