@@ -4,6 +4,8 @@
 // @version      1.0.0
 // @description  Tableau lisible et pro : capsules colorées sur les données, état interne visible, recherche
 // @include      *ListSamplesSearch.do*
+// @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/ListeRessources_MiseEnForme.user.js
+// @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/ListeRessources_MiseEnForme.user.js
 // @grant        GM_addStyle
 // @run-at       document-idle
 // ==/UserScript==
