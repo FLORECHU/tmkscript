@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         STOCKAGE : Surbrillance recherche
 // @namespace    https://github.com/FLORECHU/tmkscript
-// @version      1.0.0
+// @version      1.0.1
 // @description  Ajoute un champ de recherche dans le <th> et colore les options de #containers
 // @author       Flo
-// @match        http://svm-crbbio/TD-Biobank/StoreSamples.do*
+// @include      *StoreSamples.do*
 // @updateURL    https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Stockage_RechercheSurbrillance.user.js
 // @downloadURL  https://raw.githubusercontent.com/FLORECHU/tmkscript/refs/heads/main/Stockage_RechercheSurbrillance.user.js
 // @grant        GM_addStyle
