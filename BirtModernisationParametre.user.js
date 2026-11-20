@@ -14,7 +14,6 @@
   const ROOT = '#parameterDialogdialogContentContainer';
   const TABLE = '#parameter_table';
   const TITLE = '#parameterDialogdialogTitleBar';
-  const BACKGROUND = '.dialogBackground';
   const BODY = '.dialogBackground > .dBackground';
   const CONTENT = '#parameterDialogdialogContentContainer';
   const TOGGLE = 'tm-birt-classic-toggle';
@@ -24,7 +23,7 @@
   GM_addStyle(`
     html.${ACTIVE} { color-scheme: light; --tm-bg:#f3f6fb; --tm-paper:#fff; --tm-ink:#17243a; --tm-muted:#63728a; --tm-line:#dce4ef; --tm-blue:#315eea; --tm-focus:rgba(49,94,234,.2); font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important; color:var(--tm-ink) !important; }
     html.${ACTIVE} #parameterDialogdialogTitleBar {
-      width:min(900px,92vw) !important; min-height:58px !important; box-sizing:border-box !important;
+      min-height:58px !important; box-sizing:border-box !important;
       padding:10px 18px !important; color:#fff !important; background:#17243a !important;
       border:0 !important; border-radius:14px 14px 0 0 !important; box-shadow:0 4px 14px rgba(23,36,58,.18) !important;
     }
@@ -33,19 +32,15 @@
     html.${ACTIVE} #parameterDialogdialogCloseBtn { width:34px !important; height:34px !important; border-radius:9px !important; background:rgba(255,255,255,.14) !important; cursor:pointer !important; }
     html.${ACTIVE} #parameterDialogdialogCloseBtn::before { content:"×"; display:block; color:#fff; text-align:center; font:26px/34px system-ui,sans-serif; }
 
-    /* BIRT owns position/display and its JS lifecycle; only geometry is overridden. */
-    html.${ACTIVE} .dialogBackground { width:100vw !important; max-width:100vw !important; overflow:auto !important; }
+    /* Geometry is coordinated by layoutDialog(); these rules are visual only. */
     html.${ACTIVE} .dialogBackground > .dBackground {
-      width:min(900px,92vw) !important; max-width:92vw !important;
-      height:calc(85vh - 58px) !important; max-height:calc(85vh - 58px) !important;
-      box-sizing:border-box !important; overflow:auto !important;
+      box-sizing:border-box !important; overflow:hidden !important; display:flex !important; flex-direction:column !important;
       background:var(--tm-bg) !important; border:1px solid var(--tm-line) !important;
       border-top:0 !important; border-radius:0 0 14px 14px !important;
       box-shadow:0 18px 48px rgba(23,36,58,.18) !important;
     }
     html.${ACTIVE} #parameterDialogdialogContentContainer {
-      width:100% !important; height:calc(85vh - 132px) !important;
-      min-width:0 !important; max-width:100% !important; max-height:calc(85vh - 132px) !important;
+      min-width:0 !important; max-width:100% !important; flex:1 1 auto !important;
       box-sizing:border-box !important; overflow:auto !important; padding:18px 22px !important;
       background:var(--tm-bg) !important;
     }
@@ -77,7 +72,9 @@
     html.${ACTIVE} #parameter_table select { cursor:pointer !important; }
     html.${ACTIVE} #parameter_table input:not([type="hidden"]):not([type="button"]):focus,
     html.${ACTIVE} #parameter_table select:focus, html.${ACTIVE} #parameter_table textarea:focus { border-color:var(--tm-blue) !important; box-shadow:0 0 0 4px var(--tm-focus) !important; }
-    html.${ACTIVE} .dialogBtnBarContainer { box-sizing:border-box !important; padding:12px 20px !important; background:#fff !important; border-top:1px solid var(--tm-line) !important; }
+    html.${ACTIVE} .dialogBtnBarContainer { box-sizing:border-box !important; flex:0 0 auto !important; padding:12px 20px !important; background:#fff !important; border-top:1px solid var(--tm-line) !important; }
+    html.${ACTIVE} .dialogBtnBar, html.${ACTIVE} .dialogBtnBarButtonContainer { display:flex !important; flex-flow:row nowrap !important; align-items:center !important; justify-content:flex-end !important; gap:10px !important; width:100% !important; box-sizing:border-box !important; }
+    html.${ACTIVE} .dialogBtnBarButtonEnabled, html.${ACTIVE} #parameterDialogcancelButton { display:inline-flex !important; flex:0 0 auto !important; align-items:center !important; }
     html.${ACTIVE} .dBtnBarDividerTop, html.${ACTIVE} .dBtnBarDividerBottom,
     html.${ACTIVE} .dialogBtnBarDivider, html.${ACTIVE} .dialogBtnBarButtonLeftBackgroundEnabled,
     html.${ACTIVE} .dialogBtnBarButtonRightBackgroundEnabled { display:none !important; }
@@ -101,22 +98,26 @@
   let initialized = false;
   let observer = null;
   let framePending = false;
-  const originalStyles = new WeakMap();
+  let originalStyles = new WeakMap();
+  const styledElements = new Set();
 
   function dialogPresent() {
     return !!(document.querySelector(ROOT) && document.querySelector(TABLE) && document.querySelector(TITLE));
   }
 
   function saveOriginalStyle(element) {
-    if (!originalStyles.has(element)) originalStyles.set(element, element.getAttribute('style'));
+    if (!originalStyles.has(element)) {
+      originalStyles.set(element, element.getAttribute('style'));
+      styledElements.add(element);
+    }
   }
 
   function important(element, property, value) {
     if (!element) return;
+    const normalized = String(value);
+    if (element.style.getPropertyValue(property) === normalized && element.style.getPropertyPriority(property) === 'important') return;
     saveOriginalStyle(element);
-    if (element.style.getPropertyValue(property) !== value || element.style.getPropertyPriority(property) !== 'important') {
-      element.style.setProperty(property, value, 'important');
-    }
+    element.style.setProperty(property, normalized, 'important');
   }
 
   function markRows(table) {
@@ -133,63 +134,133 @@
     });
   }
 
-  function setGeometry() {
+  function layoutDialog() {
     framePending = false;
     if (!modern || !dialogPresent()) return;
     const title = document.querySelector(TITLE);
     const body = document.querySelector(BODY);
+    const visualRoot = document.querySelector('#parameterDialog') || body;
+    const background = document.querySelector('.dialogBackground');
     const content = document.querySelector(CONTENT);
     const buttonBar = document.querySelector('.dialogBtnBarContainer');
+    const buttonRow = document.querySelector('.dialogBtnBar');
+    const buttonGroup = document.querySelector('.dialogBtnBarButtonContainer');
     const frame = document.querySelector('#parameterDialogiframe');
-    if (!title || !body || !content || !buttonBar) return;
+    if (!title || !visualRoot || !background || !body || !content || !buttonBar) return;
 
-    const vw = document.documentElement.clientWidth || window.innerWidth;
-    const vh = document.documentElement.clientHeight || window.innerHeight;
-    const width = Math.min(900, vw * .92);
-    const titleHeight = Math.min(58, vh * .11);
-    const totalHeight = vh * .85;
-    const left = Math.max(0, (vw - width) / 2);
-    const top = Math.max(0, (vh - totalHeight) / 2);
-    const titleHeightPx = `${titleHeight}px`;
-    const bodyHeight = `${Math.max(160, totalHeight - titleHeight)}px`;
-    const buttonHeight = Math.max(54, buttonBar.getBoundingClientRect().height || 58);
-    const contentHeight = `${Math.max(100, totalHeight - titleHeight - buttonHeight)}px`;
+    const vw = window.innerWidth || document.documentElement.clientWidth;
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const W = Math.max(0, Math.min(900, .92 * vw));
+    const innerW = Math.max(0, W - 2); // account for the .dBackground border
+    const titleH = 58;
+    const left = Math.max(0, (vw - W) / 2);
+    let buttonH = 60;
 
-    important(title, 'width', `${width}px`);
+    // Ensure the frame has its target width before measuring its natural content height.
+    important(body, 'width', `${W}px`);
+    important(body, 'box-sizing', 'border-box');
+    important(content, 'width', `${innerW}px`);
+    important(content, 'max-width', `${innerW}px`);
+    for (const el of body.querySelectorAll('[style], [width]')) {
+      const inlineWidth = el.style && el.style.getPropertyValue('width');
+      const widthAttr = el.getAttribute && el.getAttribute('width');
+      if (/^(500|522)(?:px)?$/i.test((inlineWidth || '').trim()) || /^(500|522)$/i.test((widthAttr || '').trim())) {
+        important(el, 'width', `${W}px`);
+      }
+    }
+    for (const table of title.querySelectorAll('table')) important(table, 'width', '100%');
+    for (const el of [buttonBar, buttonRow, buttonGroup]) {
+      if (el) important(el, 'width', '100%');
+    }
+    if (buttonRow) {
+      important(buttonRow, 'display', 'flex');
+      important(buttonRow, 'flex-flow', 'row nowrap');
+      important(buttonRow, 'align-items', 'center');
+      important(buttonRow, 'justify-content', 'flex-end');
+    }
+    if (buttonGroup) {
+      important(buttonGroup, 'display', 'flex');
+      important(buttonGroup, 'flex-flow', 'row nowrap');
+      important(buttonGroup, 'align-items', 'center');
+      important(buttonGroup, 'justify-content', 'flex-end');
+    }
+    for (const el of buttonGroup ? buttonGroup.children : []) {
+      if (el.matches && (el.matches('#parameterDialogokButton') || el.matches('#parameterDialogcancelButton'))) {
+        important(el, 'display', 'inline-flex');
+        important(el, 'width', 'auto');
+        important(el, 'flex', '0 0 auto');
+      }
+    }
+
+    buttonH = Math.max(56, buttonBar.getBoundingClientRect().height || 60);
+    const natural = Math.max(content.scrollHeight || 0, content.getBoundingClientRect().height || 0);
+    const H = Math.max(1, Math.min(.85 * vh, titleH + natural + buttonH));
+    const contentH = Math.max(0, H - titleH - buttonH);
+    // This HTML has no #parameterDialog ancestor: .dialogBackground is the screen wrapper,
+    // .dBackground is its positioned dialog body, while the title and hidden iframe are siblings.
+    important(background, 'position', 'fixed');
+    important(background, 'left', '0px');
+    important(background, 'top', '0px');
+    important(background, 'width', `${vw}px`);
+    important(background, 'height', `${vh}px`);
+    important(background, 'overflow', 'visible');
+
+    important(visualRoot, 'position', 'absolute');
+    important(visualRoot, 'left', `${left}px`);
+    important(visualRoot, 'top', `${(vh - H) / 2 + titleH}px`);
+    important(visualRoot, 'width', `${W}px`);
+    important(visualRoot, 'height', `${H - titleH}px`);
+    important(visualRoot, 'max-width', 'none');
+    important(visualRoot, 'overflow', 'hidden');
+    important(visualRoot, 'display', 'flex');
+    important(visualRoot, 'flex-direction', 'column');
+
+    important(title, 'position', 'fixed');
     important(title, 'left', `${left}px`);
-    important(title, 'top', `${top}px`);
-    important(title, 'height', titleHeightPx);
-    important(body, 'width', `${width}px`);
-    important(body, 'height', bodyHeight);
-    important(body, 'left', `${left}px`);
-    important(body, 'top', `${top + titleHeight}px`);
-    important(content, 'width', '100%');
-    important(content, 'height', contentHeight);
+    important(title, 'top', `${(vh - H) / 2}px`);
+    important(title, 'width', `${W}px`);
+    important(title, 'height', `${titleH}px`);
+    important(title, 'max-width', 'none');
+    important(title, 'box-sizing', 'border-box');
+
+    important(content, 'width', `${innerW}px`);
+    important(content, 'height', `${contentH}px`);
+    important(content, 'min-height', '0');
+    important(content, 'max-height', `${contentH}px`);
+    important(content, 'flex', '1 1 auto');
+    important(content, 'overflow', 'auto');
+    important(buttonBar, 'width', `${W}px`);
+    important(buttonBar, 'flex', '0 0 auto');
+    important(buttonBar, 'box-sizing', 'border-box');
+
     if (frame) {
-      important(frame, 'width', `${width}px`);
-      important(frame, 'height', `${totalHeight}px`);
+      important(frame, 'position', 'fixed');
       important(frame, 'left', `${left}px`);
-      important(frame, 'top', `${top}px`);
+      important(frame, 'top', `${(vh - H) / 2}px`);
+      important(frame, 'width', `${W}px`);
+      important(frame, 'height', `${H}px`);
+      // BIRT's supplied frame is a hidden legacy mask; retain that hidden state.
     }
     markRows(document.querySelector(TABLE));
   }
 
   function scheduleGeometry() {
-    if (framePending) return;
+    if (!modern || framePending) return;
     framePending = true;
-    (window.requestAnimationFrame || (fn => window.setTimeout(fn, 0)))(setGeometry);
-  }
-
-  function restoreElementStyle(element) {
-    if (!originalStyles.has(element)) return;
-    const value = originalStyles.get(element);
-    if (value === null) element.removeAttribute('style');
-    else element.setAttribute('style', value);
+    window.setTimeout(layoutDialog, 0);
+    window.setTimeout(layoutDialog, 100);
   }
 
   function restoreClassic() {
     document.documentElement.classList.remove(ACTIVE);
-    document.querySelectorAll(`${TITLE}, ${BODY}, ${CONTENT}, #parameterDialogiframe`).forEach(restoreElementStyle);
+    for (const element of styledElements) {
+      if (!element || !element.isConnected) continue;
+      const value = originalStyles.get(element);
+      if (value === null) element.removeAttribute('style');
+      else element.setAttribute('style', value);
+    }
+    styledElements.clear();
+    originalStyles = new WeakMap();
     document.querySelectorAll(`#${TABLE} .tm-birt-label-row, #${TABLE} .tm-birt-control-row, #${TABLE} .tm-birt-group-row`).forEach(row => {
       row.classList.remove(...MARKS);
     });
@@ -244,8 +315,7 @@
       if (!dialogPresent()) return;
       if (!document.getElementById(TOGGLE)) enhance();
       if (!modern) return;
-      const geometryChanged = records.some(record => record.type === 'attributes' && record.attributeName === 'style');
-      if (geometryChanged) scheduleGeometry();
+      if (records.some(record => record.type === 'attributes' && record.attributeName === 'style')) scheduleGeometry();
       if (records.some(record => record.type === 'childList')) {
         markRows(document.querySelector(TABLE));
         scheduleGeometry();
@@ -258,3 +328,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once:true });
   else start();
 })();
+
