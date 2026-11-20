@@ -3,7 +3,7 @@
 // @namespace    local.ui.refresh
 // @version      1.0.0
 // @description  Modernise prudemment le dialogue de paramètres BIRT identifié par sa structure.
-// @match        *://*/*
+// @match        http://svm-crbbio/TD-Biobank/frameset?__report=D:/Technidata/Data/hccrb-documents//birt*
 // @run-at       document-idle
 // @grant        GM_addStyle
 // ==/UserScript==
