@@ -7,7 +7,6 @@
 // @run-at       document-idle
 // @grant        GM_addStyle
 // ==/UserScript==
-
 (() => {
   'use strict';
 
@@ -270,6 +269,105 @@
       :root.${ROOT_CLASS} .dialogBtnBarContainer { padding: 10px 12px !important; }
       :root.${ROOT_CLASS} .dialogBtnBar input[type="button"] { flex: 1 1 0 !important; min-width: 0 !important; }
     }
+    /* Override BIRT's inline geometry and make the dialog a bounded flex layout. */
+    :root.${ROOT_CLASS} .dialogBackground {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+      padding: 4vh 4vw !important;
+    }
+    :root.${ROOT_CLASS} .dBackground {
+      position: fixed !important;
+      left: 50% !important;
+      top: 50% !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: translate(-50%, -50%) !important;
+      width: min(900px, 92vw) !important;
+      min-width: 0 !important;
+      max-width: 92vw !important;
+      height: min(90vh, 900px) !important;
+      min-height: 0 !important;
+      max-height: 90vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+    }
+    :root.${ROOT_CLASS} #parameterDialogdialogTitleBar {
+      flex: 0 0 auto !important;
+    }
+    :root.${ROOT_CLASS} #parameterDialogdialogContentContainer {
+      position: relative !important;
+      left: auto !important;
+      top: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: none !important;
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      height: auto !important;
+      overflow: auto !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+    :root.${ROOT_CLASS} .dialogBtnBarContainer {
+      position: relative !important;
+      flex: 0 0 auto !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+    /* Flatten BIRT's nested layout tables so labels and controls form one column. */
+    :root.${ROOT_CLASS} #parameter_table,
+    :root.${ROOT_CLASS} #parameter_table tbody,
+    :root.${ROOT_CLASS} #parameter_table tr,
+    :root.${ROOT_CLASS} #parameter_table td,
+    :root.${ROOT_CLASS} #parameter_table table {
+      display: block !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      height: auto !important;
+      text-align: left !important;
+    }
+    :root.${ROOT_CLASS} #parameter_table tr {
+      margin: 0 !important;
+    }
+    :root.${ROOT_CLASS} #parameter_table td {
+      padding-inline: 0 !important;
+      white-space: normal !important;
+    }
+    :root.${ROOT_CLASS} .birtviewer_parameter_dialog_Label {
+      width: 100% !important;
+      margin: 10px 0 0 !important;
+    }
+    :root.${ROOT_CLASS} #parameter_table input:not([type="hidden"]):not([type="button"]),
+    :root.${ROOT_CLASS} #parameter_table select,
+    :root.${ROOT_CLASS} #parameter_table textarea {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+    :root.${ROOT_CLASS} #parameter_table tr:has(img[src*="parameter_group.gif"]) {
+      width: 100% !important;
+      margin: 14px 0 0 !important;
+      padding: 12px 16px !important;
+      border: 1px solid var(--tm-line) !important;
+      border-radius: var(--tm-radius) !important;
+      background: #eaf0fb !important;
+    }
+    :root.${ROOT_CLASS} #parameter_table tr:has(img[src*="parameter_group.gif"]) td {
+      padding: 0 !important;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       :root.${ROOT_CLASS} *, :root.${ROOT_CLASS} *::before, :root.${ROOT_CLASS} *::after {
         scroll-behavior: auto !important;
